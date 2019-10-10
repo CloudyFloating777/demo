@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alibaba.demo.persistence.mapper.StudentMapper">
+    <resultMap id="BaseResultMap" type="com.alibaba.demo.entity.Student">
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="age" jdbcType="VARCHAR" property="age"/>
+        <result column="telephone" jdbcType="VARCHAR" property="telephone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+    </resultMap>
+
+    <select id="getStudent" parameterType="String" resultMap="BaseResultMap">
+        select * from student where name like CONCAT('%',#{name},'%')
+                                      or age like CONCAT('%',#{name},'%')
+                                      or telephone like CONCAT('%',#{name},'%')
+                                      or email like CONCAT('%',#{name},'%')
+    </select>
+
+    <select id="selectStudent" parameterType="String" resultType="BaseResultMap">
+        select * from student where telephone = #{telephone}
+    </select>
+
+    <insert id="addStudent">
+        insert into student (name, age, telephone, email)
+        value (#{name}, #{age}, #{telephone}, #{email})
+    </insert>
+
+    <update id="modifyStudent">
+        update student set
+            name = #{name},
+            age = #{age},
+            email = #{email}
+            where telephone = #{telephone}
+    </update>
+
+    <delete id="deleteStudent" parameterType="String">
+        delete from student where telephone = #{telephone}
+    </delete>
+</mapper>
